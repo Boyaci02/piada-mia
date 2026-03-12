@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meny – Piada Mia, Göteborg</title>
+  <meta name="description" content="Piada Mias fullständiga meny – piadine, pommes, dessert och dryck. Drottninggatan 30, Göteborg.">
+  <meta property="og:title" content="Meny – Piada Mia">
+  <meta property="og:description" content="Se hela menyn för Piada Mia på Drottninggatan 30 i Göteborg.">
+  <meta property="og:type" content="restaurant.menu">
+  <link rel="icon" type="image/png" href="Logo-broad-PIADA-MIA-rgb.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===========================
+       RESET & BASE
+    =========================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', Helvetica, Arial, sans-serif;
+      background: #F5ECD7;
+      color: #2C1810;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+    ul, ol { list-style: none; }
+    button { cursor: pointer; border: none; background: none; font-family: inherit; }
+
+    /* ===========================
+       BRAND VARIABLES
+    =========================== */
+    :root {
+      --terra:      #C84B2B;
+      --terra-dark: #a83a1f;
+      --cream:      #F5ECD7;
+      --cream-dark: #ede0c8;
+      --dark:       #2C1810;
+      --white:      #FFFFFF;
+      --serif:      'Cormorant Garamond', Georgia, serif;
+      --sans:       'DM Sans', Helvetica, Arial, sans-serif;
+      --nav-h:      72px;
+      --max-w:      1100px;
+      --px:         64px;
+    }
+
+    /* ===========================
+       NAVIGATION (always scrolled)
+    =========================== */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: var(--cream);
+      border-bottom: 1px solid rgba(44,24,16,0.08);
+      box-shadow: 0 2px 24px rgba(44,24,16,0.08);
+    }
+    .nav__inner {
+      max-width: 1400px; margin: 0 auto; padding: 0 var(--px);
+      height: var(--nav-h);
+      display: flex; align-items: center; justify-content: space-between; gap: 32px;
+    }
+    .nav__logo-link { display: flex; align-items: center; }
+    .nav__logo { height: 30px; width: auto; }
+    .nav__links {
+      display: flex; gap: 36px; align-items: center;
+    }
+    .nav__links a {
+      font-family: var(--sans); font-size: 11px; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--dark);
+      transition: color 0.22s;
+    }
+    .nav__links a:hover { color: var(--terra); }
+    .nav__links a.active { color: var(--terra); }
+    .nav__actions { display: flex; align-items: center; gap: 16px; }
+    .nav__cta {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 10px 22px;
+      background: var(--terra); color: var(--white);
+      font-family: var(--sans); font-size: 11px; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      transition: background 0.22s ease;
+    }
+    .nav__cta:hover { background: var(--terra-dark); }
+
+    /* Hamburger */
+    .hamburger {
+      display: none; flex-direction: column; justify-content: center;
+      align-items: center; gap: 5px;
+      width: 36px; height: 36px; padding: 4px;
+    }
+    .hamburger span {
+      display: block; width: 22px; height: 1.5px;
+      background: var(--dark);
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      transform-origin: center;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* Mobile menu overlay */
+    .mobile-menu {
+      position: fixed; inset: 0; z-index: 999;
+      background: var(--dark);
+      display: flex; flex-direction: column;
+      padding: var(--nav-h) 40px 60px;
+      opacity: 0; visibility: hidden; pointer-events: none;
+      transition: opacity 0.38s ease, visibility 0.38s ease;
+    }
+    .mobile-menu.open { opacity: 1; visibility: visible; pointer-events: auto; }
+    .mobile-menu__links {
+      flex: 1; display: flex; flex-direction: column;
+      justify-content: center; gap: 8px;
+    }
+    .mobile-menu__links a {
+      font-family: var(--serif); font-size: clamp(36px, 8vw, 56px);
+      font-weight: 600; color: rgba(245,236,215,0.85);
+      line-height: 1.2; padding: 8px 0;
+      border-bottom: 1px solid rgba(245,236,215,0.08);
+      transition: color 0.2s;
+    }
+    .mobile-menu__links a:hover { color: var(--cream); }
+    .mobile-menu__footer {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 32px; border-top: 1px solid rgba(245,236,215,0.12);
+    }
+    .mobile-menu__cta {
+      display: inline-flex; align-items: center;
+      padding: 14px 32px;
+      background: var(--terra); color: var(--white);
+      font-family: var(--sans); font-size: 11px; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+    }
+    .mobile-menu__ig {
+      font-family: var(--sans); font-size: 12px; font-weight: 500;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: rgba(245,236,215,0.35); transition: color 0.2s;
+    }
+    .mobile-menu__ig:hover { color: var(--cream); }
+
+    /* ===========================
+       SCROLL REVEAL
+    =========================== */
+    .reveal {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.10s; }
+    .reveal-delay-2 { transition-delay: 0.20s; }
+    .reveal-delay-3 { transition-delay: 0.30s; }
+
+    /* ===========================
+       MENU PAGE HEADER
+    =========================== */
+    .menu-header {
+      background: var(--dark);
+      padding: calc(var(--nav-h) + 80px) var(--px) 80px;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .menu-header::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 60% 40%, rgba(200,75,43,0.18) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .menu-header__eyebrow {
+      display: block;
+      font-family: var(--sans); font-size: 10px; font-weight: 600;
+      letter-spacing: 0.34em; text-transform: uppercase;
+      color: var(--terra); margin-bottom: 16px;
+    }
+    .menu-header__title {
+      font-family: var(--serif); font-weight: 700;
+      font-size: clamp(60px, 9vw, 110px);
+      color: var(--white); line-height: 1.0;
+      margin-bottom: 20px;
+    }
+    .menu-header__sub {
+      font-family: var(--sans); font-size: 12px; font-weight: 400;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: rgba(255,255,255,0.32);
+    }
+
+    /* ===========================
+       MENU NAV BAR (sticky categories)
+    =========================== */
+    .menu-nav {
+      position: sticky; top: var(--nav-h); z-index: 100;
+      background: var(--white);
+      border-bottom: 1px solid rgba(44,24,16,0.08);
+      overflow-x: auto; scrollbar-width: none;
+    }
+    .menu-nav::-webkit-scrollbar { display: none; }
+    .menu-nav__inner {
+      display: flex; align-items: center; gap: 0;
+      max-width: var(--max-w); margin: 0 auto; padding: 0 var(--px);
+      white-space: nowrap;
+    }
+    .menu-nav__link {
+      display: inline-flex; align-items: center;
+      padding: 18px 28px;
+      font-family: var(--sans); font-size: 11px; font-weight: 600;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: rgba(44,24,16,0.45);
+      border-bottom: 2px solid transparent; margin-bottom: -1px;
+      transition: color 0.22s, border-color 0.22s;
+    }
+    .menu-nav__link:hover { color: var(--dark); }
+    .menu-nav__link.active {
+      color: var(--terra); border-bottom-color: var(--terra);
+    }
+
+    /* ===========================
+       MENU SECTIONS
+    =========================== */
+    .menu-section { padding: 80px 0; }
+    .menu-section--alt { background: var(--white); }
+    .menu-section__inner {
+      max-width: var(--max-w); margin: 0 auto; padding: 0 var(--px);
+    }
+    .menu-section__header {
+      display: flex; flex-direction: column;
+      margin-bottom: 48px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid rgba(44,24,16,0.10);
+    }
+    .menu-section__label {
+      display: block;
+      font-family: var(--sans); font-size: 10px; font-weight: 600;
+      letter-spacing: 0.30em; text-transform: uppercase;
+      color: var(--terra); margin-bottom: 10px;
+    }
+    .menu-section__title {
+      font-family: var(--serif); font-weight: 600;
+      font-size: clamp(40px, 5vw, 64px);
+      color: var(--dark); line-height: 1.1;
+    }
+
+    /* Piada tiles (image + info) */
+    .menu-tiles {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .menu-tile {
+      background: var(--white);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .menu-tile:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 56px rgba(44,24,16,0.12);
+    }
+    .menu-tile__img-wrap { aspect-ratio: 3 / 2; overflow: hidden; }
+    .menu-tile__img-wrap img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform 0.5s ease;
+    }
+    .menu-tile:hover .menu-tile__img-wrap img { transform: scale(1.06); }
+    .menu-tile__info { padding: 22px 24px 26px; }
+    .menu-tile__name {
+      font-family: var(--serif); font-style: italic; font-size: 24px;
+      font-weight: 600; color: var(--dark); margin-bottom: 6px;
+    }
+    .menu-tile__desc {
+      font-size: 13px; color: rgba(44,24,16,0.52);
+      line-height: 1.6; margin-bottom: 14px;
+    }
+    .menu-tile__footer {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .menu-tile__price {
+      font-family: var(--serif); font-size: 22px; font-weight: 600;
+      color: var(--terra);
+    }
+    .menu-tile__tag {
+      font-family: var(--sans); font-size: 9px; font-weight: 600;
+      letter-spacing: 0.20em; text-transform: uppercase;
+      color: var(--terra); border: 1px solid rgba(200,75,43,0.25);
+      padding: 4px 10px;
+    }
+
+    /* List rows (pommes, dessert, dryck) */
+    .menu-list {
+      border-top: 1px solid rgba(44,24,16,0.08);
+    }
+    .menu-list__row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 20px 0; gap: 24px;
+      border-bottom: 1px solid rgba(44,24,16,0.06);
+    }
+    .menu-list__left { flex: 1; }
+    .menu-list__name {
+      display: block;
+      font-family: var(--serif); font-size: 20px; font-weight: 600;
+      font-style: italic; color: var(--dark); margin-bottom: 4px;
+    }
+    .menu-list__desc {
+      font-size: 13px; color: rgba(44,24,16,0.48); line-height: 1.6;
+    }
+    .menu-list__price {
+      font-family: var(--serif); font-size: 22px; font-weight: 600;
+      color: var(--terra); white-space: nowrap;
+    }
+
+    /* ===========================
+       FOOTER
+    =========================== */
+    .footer {
+      background: var(--dark); padding: 72px 0 36px;
+      border-top: 3px solid var(--terra);
+    }
+    .footer__inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 var(--px);
+    }
+    .footer__top { margin-bottom: 60px; }
+    .footer__logo {
+      height: 32px; width: auto; margin-bottom: 14px;
+      filter: brightness(0) invert(1);
+    }
+    .footer__tagline {
+      font-family: var(--serif); font-style: italic; font-size: 14px;
+      color: rgba(245,236,215,0.35); letter-spacing: 0.04em;
+    }
+    .footer__grid {
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      gap: 48px; margin-bottom: 60px;
+    }
+    .footer__col-title {
+      font-family: var(--sans); font-size: 9px; font-weight: 600;
+      letter-spacing: 0.26em; text-transform: uppercase;
+      color: rgba(245,236,215,0.28); margin-bottom: 20px;
+    }
+    .footer__text {
+      font-family: var(--sans); font-size: 14px;
+      color: rgba(245,236,215,0.55); line-height: 1.8;
+    }
+    .footer__col ul { display: flex; flex-direction: column; gap: 10px; }
+    .footer__col ul li a {
+      font-family: var(--sans); font-size: 14px;
+      color: rgba(245,236,215,0.55); transition: color 0.22s;
+    }
+    .footer__col ul li a:hover { color: var(--cream); }
+    .footer__bottom {
+      border-top: 1px solid rgba(245,236,215,0.08); padding-top: 28px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer__copy {
+      font-family: var(--sans); font-size: 11px;
+      color: rgba(245,236,215,0.22);
+    }
+    .footer__ig {
+      font-family: var(--sans); font-size: 11px; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: rgba(245,236,215,0.28); transition: color 0.22s;
+    }
+    .footer__ig:hover { color: var(--cream); }
+
+    /* ===========================
+       RESPONSIVE
+    =========================== */
+    @media (max-width: 1100px) {
+      :root { --px: 40px; }
+    }
+
+    @media (max-width: 768px) {
+      :root { --px: 24px; }
+
+      .nav__links { display: none; }
+      .hamburger { display: flex; }
+      .nav__cta { display: none; }
+
+      .menu-header { padding: calc(var(--nav-h) + 60px) var(--px) 60px; }
+      .menu-nav__inner { padding: 0 var(--px); }
+      .menu-nav__link { padding: 16px 18px; font-size: 10px; }
+      .menu-tiles { grid-template-columns: 1fr; }
+      .footer__grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+      .footer__bottom { flex-direction: column; gap: 12px; text-align: center; }
+    }
+
+    @media (max-width: 480px) {
+      .footer__grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===========================
+       NAVIGATION
+  =========================== -->
+  <nav class="nav" id="nav" role="navigation" aria-label="Huvudnavigering">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo-link" aria-label="Piada Mia – hem">
+        <img src="Logo-broad-PIADA-MIA-rgb.png" alt="Piada Mia" class="nav__logo">
+      </a>
+      <ul class="nav__links" role="list">
+        <li><a href="index.html#piada">Meny</a></li>
+        <li><a href="index.html#om">Om oss</a></li>
+        <li><a href="index.html#hitta-hit">Hitta hit</a></li>
+        <li><a href="menu.html" class="active">Hela menyn</a></li>
+      </ul>
+      <div class="nav__actions">
+        <a href="https://www.instagram.com/piadamia" target="_blank" rel="noopener"
+           class="nav__cta">Beställ online</a>
+        <button class="hamburger" id="hamburger"
+                aria-label="Öppna meny" aria-expanded="false" aria-controls="mobile-menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true" role="dialog" aria-label="Mobilmeny">
+    <nav class="mobile-menu__links">
+      <a href="index.html">Hem</a>
+      <a href="index.html#om">Om oss</a>
+      <a href="index.html#hitta-hit">Hitta hit</a>
+      <a href="menu.html">Hela menyn</a>
+    </nav>
+    <div class="mobile-menu__footer">
+      <a href="https://www.instagram.com/piadamia" target="_blank" rel="noopener"
+         class="mobile-menu__cta">Beställ online</a>
+      <a href="https://www.instagram.com/piadamia" target="_blank" rel="noopener"
+         class="mobile-menu__ig">@piadamia</a>
+    </div>
+  </div>
+
+  <!-- ===========================
+       HEADER
+  =========================== -->
+  <header class="menu-header" aria-labelledby="menu-main-title">
+    <span class="menu-header__eyebrow">Drottninggatan 30, Göteborg</span>
+    <h1 class="menu-header__title" id="menu-main-title">Piada Mia</h1>
+    <p class="menu-header__sub">L'Italia in una mano</p>
+  </header>
+
+  <!-- ===========================
+       STICKY CATEGORY NAV
+  =========================== -->
+  <nav class="menu-nav" aria-label="Menykategorier">
+    <div class="menu-nav__inner">
+      <a href="#piadine" class="menu-nav__link active">Piadine</a>
+      <a href="#pommes" class="menu-nav__link">Pommes</a>
+      <a href="#dessert" class="menu-nav__link">Dessert</a>
+      <a href="#dryck" class="menu-nav__link">Dryck</a>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- ===========================
+         PIADINE
+    =========================== -->
+    <section class="menu-section" id="piadine" aria-labelledby="piadine-heading">
+      <div class="menu-section__inner">
+        <div class="menu-section__header reveal">
+          <span class="menu-section__label">Hantverk</span>
+          <h2 class="menu-section__title" id="piadine-heading">Piadine</h2>
+        </div>
+        <div class="menu-tiles">
+          <article class="menu-tile reveal">
+            <div class="menu-tile__img-wrap">
+              <img
+                src="https://images.unsplash.com/photo-1528736235302-52922df5c122?w=600&q=80"
+                alt="Mortazza – mortadella, stracciatella, pistage" loading="lazy">
+            </div>
+            <div class="menu-tile__info">
+              <h3 class="menu-tile__name">Mortazza</h3>
+              <p class="menu-tile__desc">Mortadella, stracciatella, pistage</p>
+              <div class="menu-tile__footer">
+                <span class="menu-tile__price">XXX kr</span>
+                <span class="menu-tile__tag">Signatur</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="menu-tile reveal reveal-delay-1">
+            <div class="menu-tile__img-wrap">
+              <img
+                src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=600&q=80"
+                alt="Rustica – prosciutto crudo, mozzarella, tomat, ruccola" loading="lazy">
+            </div>
+            <div class="menu-tile__info">
+              <h3 class="menu-tile__name">Rustica</h3>
+              <p class="menu-tile__desc">Prosciutto crudo, mozzarella, tomat, ruccola</p>
+              <div class="menu-tile__footer">
+                <span class="menu-tile__price">XXX kr</span>
+                <span class="menu-tile__tag">Klassiker</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="menu-tile reveal reveal-delay-2">
+            <div class="menu-tile__img-wrap">
+              <img
+                src="https://images.unsplash.com/photo-1476718406336-bb5a9690ee2a?w=600&q=80"
+                alt="Bosco – tryffelsalami, ost, svamp" loading="lazy">
+            </div>
+            <div class="menu-tile__info">
+              <h3 class="menu-tile__name">Bosco</h3>
+              <p class="menu-tile__desc">Tryffelsalami, ost, svamp</p>
+              <div class="menu-tile__footer">
+                <span class="menu-tile__price">XXX kr</span>
+                <span class="menu-tile__tag">Seasonal</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="menu-tile reveal">
+            <div class="menu-tile__img-wrap">
+              <img
+                src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=600&q=80"
+                alt="Classica – squacquerone, prosciutto cotto" loading="lazy">
+            </div>
+            <div class="menu-tile__info">
+              <h3 class="menu-tile__name">Classica</h3>
+              <p class="menu-tile__desc">Squacquerone, prosciutto cotto</p>
+              <div class="menu-tile__footer">
+                <span class="menu-tile__price">XXX kr</span>
+                <span class="menu-tile__tag">Original</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="menu-tile reveal reveal-delay-1">
+            <div class="menu-tile__img-wrap">
+              <img
+                src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&q=80"
+                alt="Verde – ruccola, parmesan, grillad zucchini" loading="lazy">
+            </div>
+            <div class="menu-tile__info">
+              <h3 class="menu-tile__name">Verde</h3>
+              <p class="menu-tile__desc">Ruccola, parmesan, grillad zucchini, citronaioli</p>
+              <div class="menu-tile__footer">
+                <span class="menu-tile__price">XXX kr</span>
+                <span class="menu-tile__tag">Vegetarisk</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===========================
+         POMMES
+    =========================== -->
+    <section class="menu-section menu-section--alt" id="pommes" aria-labelledby="pommes-heading">
+      <div class="menu-section__inner">
+        <div class="menu-section__header reveal">
+          <span class="menu-section__label">Tillbehör</span>
+          <h2 class="menu-section__title" id="pommes-heading">Pommes</h2>
+        </div>
+        <div class="menu-list">
+          <div class="menu-list__row reveal">
+            <div class="menu-list__left">
+              <span class="menu-list__name">Pommes frites</span>
+              <span class="menu-list__desc">Klassisk crispy</span>
+            </div>
+            <span class="menu-list__price">XX kr</span>
+          </div>
+          <div class="menu-list__row reveal">
+            <div class="menu-list__left">
+              <span class="menu-list__name">Tryffelostpommes</span>
+              <span class="menu-list__desc">Pommes med tryffelolja och parmesanflakes</span>
+            </div>
+            <span class="menu-list__price">XX kr</span>
+          </div>
+          <div class="menu-list__row reveal">
+            <div class="menu-list__left">
+              <span class="menu-list__name">Sötpotatis</span>
+              <span class="menu-list__desc">Krispiga sötpotatisfrites</span>
+            </div>
+            <span class="menu-list__price">XX kr</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===========================
+         DESSERT
+    =========================== -->
+    <section class="menu-section" id="dessert" aria-labelledby="dessert-heading">
+      <div class="menu-section__inner">
+        <div class="menu-section__header reveal">
+          <span class="menu-section__label">Dolci</span>
+          <h2 class="menu-section__title" id="dessert-heading">Dessert</h2>
+        </div>
+        <div class="menu-list">
+          <div class="menu-list__row reveal">
+            <div class="menu-list__left">
+              <span class="menu-list__name">Piada dolce</span>
+              <span class="menu-list__desc">Nutella och ricotta</span>
+            </div>
+            <span class="menu-list__price">XX kr</span>
+          </div>
+          <div class="menu-list__row reveal">
+            <div class="menu-list__left">
+              <span class="menu-list__name">Cannolo siciliano</span>
+              <span class="menu-list__desc">Ricottafylld cannolo med pistagemix</span>
+            </div>
+            <span class="menu-list__price">XX kr</span>
+          </div>
+          <div class="menu-list__row reveal">
+            <div class="menu-list__left">
+              <span class="menu-list__name">Tiramisu</span>
+              <span class="menu-list__desc">Klassisk hemgjord tiramisu</span>
+            </div>
+            <span class="menu-list__price">XX kr</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===========================
+         DRYCK
+    =========================== -->
+    <section class="menu-section menu-section--alt" id="dryck" aria-labelledby="dryck-heading">
+      <div class="menu-section__inner">
+        <div class="menu-section__header reveal">
+          <span class="menu-section__label">Bevande</span>
+          <h2 class="menu-section__title" id="dryck-heading">Dryck</h2>
+        </div>
+        <div class="menu-list">
+          <div class="menu-list__row reveal">
+            <div class="menu-list__left">
+              <span class="menu-list__name">Limonata italiana</span>
+              <span class="menu-list__desc">Hemgjord italiensk citronlimonad</span>
+            </div>
+            <span class="menu-list__price">XX kr</span>
+          </div>
+          <div class="menu-list__row reveal">
+            <div class="menu-list__left">
+              <span class="menu-list__name">San Pellegrino</span>
+              <span class="menu-list__desc">Sparkling mineral water, 25 cl</span>
+            </div>
+            <span class="menu-list__price">XX kr</span>
+          </div>
+          <div class="menu-list__row reveal">
+            <div class="menu-list__left">
+              <span class="menu-list__name">Coca-Cola</span>
+              <span class="menu-list__desc">33 cl</span>
+            </div>
+            <span class="menu-list__price">XX kr</span>
+          </div>
+          <div class="menu-list__row reveal">
+            <div class="menu-list__left">
+              <span class="menu-list__name">Vatten</span>
+              <span class="menu-list__desc">Stilla / kolsyrat</span>
+            </div>
+            <span class="menu-list__price">XX kr</span>
+          </div>
+          <div class="menu-list__row reveal">
+            <div class="menu-list__left">
+              <span class="menu-list__name">Espresso</span>
+              <span class="menu-list__desc">Kort och intensiv</span>
+            </div>
+            <span class="menu-list__price">XX kr</span>
+          </div>
+          <div class="menu-list__row reveal">
+            <div class="menu-list__left">
+              <span class="menu-list__name">Caffè latte</span>
+              <span class="menu-list__desc">Dubbel espresso med ångad mjölk</span>
+            </div>
+            <span class="menu-list__price">XX kr</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===========================
+       FOOTER
+  =========================== -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer__inner">
+      <div class="footer__top">
+        <img src="Logo-broad-PIADA-MIA-rgb.png" alt="Piada Mia" class="footer__logo">
+        <p class="footer__tagline">L'Italia in una mano</p>
+      </div>
+      <div class="footer__grid">
+        <div class="footer__col">
+          <p class="footer__col-title">Besök oss</p>
+          <p class="footer__text">
+            Drottninggatan 30<br>
+            411 03 Göteborg<br><br>
+            Öppet 11:00 – 20:00
+          </p>
+        </div>
+        <div class="footer__col">
+          <p class="footer__col-title">Kontakt</p>
+          <ul>
+            <li><a href="mailto:info@piadamia.se">info@piadamia.se</a></li>
+            <li>
+              <a href="https://www.instagram.com/piadamia"
+                 target="_blank" rel="noopener">@piadamia</a>
+            </li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <p class="footer__col-title">Navigering</p>
+          <ul>
+            <li><a href="index.html">Hem</a></li>
+            <li><a href="index.html#om">Om oss</a></li>
+            <li><a href="index.html#hitta-hit">Hitta hit</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copy">© 2026 Piada Mia. Alla rättigheter förbehållna.</p>
+        <a href="https://www.instagram.com/piadamia"
+           target="_blank" rel="noopener" class="footer__ig">Instagram</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===========================
+       JAVASCRIPT
+  =========================== -->
+  <script>
+    // Mobile menu
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    function openMenu() {
+      hamburger.classList.add('open');
+      mobileMenu.classList.add('open');
+      hamburger.setAttribute('aria-expanded', 'true');
+      mobileMenu.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMenu() {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      mobileMenu.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    hamburger.addEventListener('click', () =>
+      mobileMenu.classList.contains('open') ? closeMenu() : openMenu());
+    mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && mobileMenu.classList.contains('open')) closeMenu();
+    });
+
+    // Scroll reveal
+    const revealObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          revealObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.10, rootMargin: '0px 0px -30px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+    // Active category nav on scroll
+    const sections = document.querySelectorAll('[id]');
+    const navLinks = document.querySelectorAll('.menu-nav__link');
+
+    const sectionObs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(link => {
+            link.classList.toggle(
+              'active',
+              link.getAttribute('href') === '#' + entry.target.id
+            );
+          });
+        }
+      });
+    }, { threshold: 0.4 });
+
+    sections.forEach(section => sectionObs.observe(section));
+  </script>
+</body>
+</html>
