@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Meny – Piada Mia, Göteborg</title>
-  <meta name="description" content="Piada Mias fullständiga meny – piadine, pommes, dessert och dryck. Drottninggatan 30, Göteborg.">
+  <meta name="description" content="Piada Mias fullständiga meny – le nostre piade, fries, dolce, caffè och italienska drycker. Drottninggatan 30, Göteborg.">
   <meta property="og:title" content="Meny – Piada Mia">
   <meta property="og:description" content="Se hela menyn för Piada Mia på Drottninggatan 30 i Göteborg.">
   <meta property="og:type" content="restaurant.menu">
@@ -204,7 +204,7 @@
     }
     .menu-nav__link {
       display: inline-flex; align-items: center;
-      padding: 18px 28px;
+      padding: 18px 22px;
       font-family: var(--sans); font-size: 11px; font-weight: 600;
       letter-spacing: 0.16em; text-transform: uppercase;
       color: rgba(44,24,16,0.45);
@@ -242,7 +242,26 @@
       color: var(--dark); line-height: 1.1;
     }
 
-    /* Piada tiles (image + info) */
+    /* Sub-heading inside section (Caffè, Soft Drinks, Bevande Italiane) */
+    .menu-subhead {
+      display: flex; align-items: baseline; gap: 14px;
+      margin-top: 56px; margin-bottom: 8px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(44,24,16,0.10);
+    }
+    .menu-subhead:first-child { margin-top: 0; }
+    .menu-subhead__title {
+      font-family: var(--serif); font-weight: 600;
+      font-size: clamp(28px, 3.4vw, 40px);
+      color: var(--dark); line-height: 1.1;
+    }
+    .menu-subhead__note {
+      font-family: var(--sans); font-size: 11px; font-weight: 500;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(44,24,16,0.40);
+    }
+
+    /* Piada tiles (image + info) — kept for future image-based layout */
     .menu-tiles {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -286,27 +305,35 @@
       padding: 4px 10px;
     }
 
-    /* List rows (pommes, dessert, dryck) */
+    /* List rows (used for all menu items currently — images return later) */
     .menu-list {
       border-top: 1px solid rgba(44,24,16,0.08);
     }
     .menu-list__row {
       display: flex; justify-content: space-between; align-items: baseline;
-      padding: 20px 0; gap: 24px;
+      padding: 22px 0; gap: 24px;
       border-bottom: 1px solid rgba(44,24,16,0.06);
     }
-    .menu-list__left { flex: 1; }
+    .menu-list__left { flex: 1; min-width: 0; }
     .menu-list__name {
       display: block;
-      font-family: var(--serif); font-size: 20px; font-weight: 600;
-      font-style: italic; color: var(--dark); margin-bottom: 4px;
+      font-family: var(--serif); font-size: 22px; font-weight: 600;
+      font-style: italic; color: var(--dark); margin-bottom: 6px;
     }
     .menu-list__desc {
-      font-size: 13px; color: rgba(44,24,16,0.48); line-height: 1.6;
+      font-size: 13px; color: rgba(44,24,16,0.55); line-height: 1.65;
     }
     .menu-list__price {
       font-family: var(--serif); font-size: 22px; font-weight: 600;
       color: var(--terra); white-space: nowrap;
+    }
+    .menu-list__tag {
+      display: inline-block;
+      font-family: var(--sans); font-size: 9px; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--terra); border: 1px solid rgba(200,75,43,0.30);
+      padding: 3px 9px; margin-left: 10px;
+      vertical-align: middle;
     }
 
     /* ===========================
@@ -378,8 +405,11 @@
 
       .menu-header { padding: calc(var(--nav-h) + 60px) var(--px) 60px; }
       .menu-nav__inner { padding: 0 var(--px); }
-      .menu-nav__link { padding: 16px 18px; font-size: 10px; }
-      .menu-tiles { grid-template-columns: 1fr; }
+      .menu-nav__link { padding: 16px 16px; font-size: 10px; }
+      .menu-list__row { flex-wrap: wrap; padding: 18px 0; }
+      .menu-list__name { font-size: 19px; }
+      .menu-list__price { font-size: 19px; }
+      .menu-subhead { flex-wrap: wrap; gap: 6px; margin-top: 44px; }
       .footer__grid { grid-template-columns: 1fr 1fr; gap: 32px; }
       .footer__bottom { flex-direction: column; gap: 12px; text-align: center; }
     }
@@ -446,229 +476,334 @@
   =========================== -->
   <nav class="menu-nav" aria-label="Menykategorier">
     <div class="menu-nav__inner">
-      <a href="#piadine" class="menu-nav__link active">Piadine</a>
-      <a href="#pommes" class="menu-nav__link">Pommes</a>
-      <a href="#dessert" class="menu-nav__link">Dessert</a>
-      <a href="#dryck" class="menu-nav__link">Dryck</a>
+      <a href="#piade" class="menu-nav__link active">Le nostre piade</a>
+      <a href="#fries" class="menu-nav__link">Fries</a>
+      <a href="#dolce" class="menu-nav__link">Dolce</a>
+      <a href="#caffe" class="menu-nav__link">Caffè</a>
+      <a href="#soft-drinks" class="menu-nav__link">Soft Drinks</a>
+      <a href="#bevande" class="menu-nav__link">Bevande Italiane</a>
     </div>
   </nav>
 
   <main>
 
     <!-- ===========================
-         PIADINE
+         LE NOSTRE PIADE
     =========================== -->
-    <section class="menu-section" id="piadine" aria-labelledby="piadine-heading">
+    <section class="menu-section" id="piade" aria-labelledby="piade-heading">
       <div class="menu-section__inner">
         <div class="menu-section__header reveal">
           <span class="menu-section__label">Hantverk</span>
-          <h2 class="menu-section__title" id="piadine-heading">Piadine</h2>
+          <h2 class="menu-section__title" id="piade-heading">Le nostre piade</h2>
         </div>
-        <div class="menu-tiles">
-          <article class="menu-tile reveal">
-            <div class="menu-tile__img-wrap">
-              <img
-                src="https://images.unsplash.com/photo-1528736235302-52922df5c122?w=600&q=80"
-                alt="Mortazza – mortadella, stracciatella, pistage" loading="lazy">
+        <div class="menu-list">
+          <div class="menu-list__row reveal">
+            <div class="menu-list__left">
+              <span class="menu-list__name">Mortazza</span>
+              <span class="menu-list__desc">Mortadella IGP · stracciatella · pesto alla genovese · pistacchio · citronzest</span>
             </div>
-            <div class="menu-tile__info">
-              <h3 class="menu-tile__name">Mortazza</h3>
-              <p class="menu-tile__desc">Mortadella, stracciatella, pistage</p>
-              <div class="menu-tile__footer">
-                <span class="menu-tile__price">XXX kr</span>
-                <span class="menu-tile__tag">Signatur</span>
-              </div>
+            <span class="menu-list__price">99 kr</span>
+          </div>
+          <div class="menu-list__row reveal">
+            <div class="menu-list__left">
+              <span class="menu-list__name">Contadina</span>
+              <span class="menu-list__desc">Salame Milano · pecorino romano DOP · babyspenat · soltorkade tomater · paprikakräm</span>
             </div>
-          </article>
-
-          <article class="menu-tile reveal reveal-delay-1">
-            <div class="menu-tile__img-wrap">
-              <img
-                src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=600&q=80"
-                alt="Rustica – prosciutto crudo, mozzarella, tomat, ruccola" loading="lazy">
+            <span class="menu-list__price">95 kr</span>
+          </div>
+          <div class="menu-list__row reveal">
+            <div class="menu-list__left">
+              <span class="menu-list__name">Bosco</span>
+              <span class="menu-list__desc">Salame al tartufo · svart tryffelkräm · ruccola · mandlar · dijonnaise</span>
             </div>
-            <div class="menu-tile__info">
-              <h3 class="menu-tile__name">Rustica</h3>
-              <p class="menu-tile__desc">Prosciutto crudo, mozzarella, tomat, ruccola</p>
-              <div class="menu-tile__footer">
-                <span class="menu-tile__price">XXX kr</span>
-                <span class="menu-tile__tag">Klassiker</span>
-              </div>
+            <span class="menu-list__price">109 kr</span>
+          </div>
+          <div class="menu-list__row reveal">
+            <div class="menu-list__left">
+              <span class="menu-list__name">Rustica</span>
+              <span class="menu-list__desc">Finocchiona · taleggio DOP · rostad potatiskräm · krispig lök · rostad vitlöksmayo · picklad rödlök</span>
             </div>
-          </article>
-
-          <article class="menu-tile reveal reveal-delay-2">
-            <div class="menu-tile__img-wrap">
-              <img
-                src="https://images.unsplash.com/photo-1476718406336-bb5a9690ee2a?w=600&q=80"
-                alt="Bosco – tryffelsalami, ost, svamp" loading="lazy">
+            <span class="menu-list__price">89 kr</span>
+          </div>
+          <div class="menu-list__row reveal">
+            <div class="menu-list__left">
+              <span class="menu-list__name">Classica med twist</span>
+              <span class="menu-list__desc">Prosciutto crudo · stracchino · ruccola · balsamico &amp; rödbetsreduktion · parmesan</span>
             </div>
-            <div class="menu-tile__info">
-              <h3 class="menu-tile__name">Bosco</h3>
-              <p class="menu-tile__desc">Tryffelsalami, ost, svamp</p>
-              <div class="menu-tile__footer">
-                <span class="menu-tile__price">XXX kr</span>
-                <span class="menu-tile__tag">Seasonal</span>
-              </div>
+            <span class="menu-list__price">99 kr</span>
+          </div>
+          <div class="menu-list__row reveal">
+            <div class="menu-list__left">
+              <span class="menu-list__name">Tricolore</span>
+              <span class="menu-list__desc">Prosciutto crudo · pesto alla genovese · ruccola · soltorkade tomater · stracciatella</span>
             </div>
-          </article>
-
-          <article class="menu-tile reveal">
-            <div class="menu-tile__img-wrap">
-              <img
-                src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=600&q=80"
-                alt="Classica – squacquerone, prosciutto cotto" loading="lazy">
+            <span class="menu-list__price">105 kr</span>
+          </div>
+          <div class="menu-list__row reveal">
+            <div class="menu-list__left">
+              <span class="menu-list__name">Dolce Calabria</span>
+              <span class="menu-list__desc">Prosciutto cotto · zucchinchips · vispad citronricotta · 'ndujakräm</span>
             </div>
-            <div class="menu-tile__info">
-              <h3 class="menu-tile__name">Classica</h3>
-              <p class="menu-tile__desc">Squacquerone, prosciutto cotto</p>
-              <div class="menu-tile__footer">
-                <span class="menu-tile__price">XXX kr</span>
-                <span class="menu-tile__tag">Original</span>
-              </div>
+            <span class="menu-list__price">95 kr</span>
+          </div>
+          <div class="menu-list__row reveal">
+            <div class="menu-list__left">
+              <span class="menu-list__name">L'orto<span class="menu-list__tag">Vegan</span></span>
+              <span class="menu-list__desc">Caponata siciliana · hummus med soltorkade tomater · rostade rödbetor · tarallo · örtmayo</span>
             </div>
-          </article>
-
-          <article class="menu-tile reveal reveal-delay-1">
-            <div class="menu-tile__img-wrap">
-              <img
-                src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&q=80"
-                alt="Verde – ruccola, parmesan, grillad zucchini" loading="lazy">
+            <span class="menu-list__price">89 kr</span>
+          </div>
+          <div class="menu-list__row reveal">
+            <div class="menu-list__left">
+              <span class="menu-list__name">Mediterranea<span class="menu-list__tag">Veg</span></span>
+              <span class="menu-list__desc">Crispy cheese · röd pesto · babyspenat · oliver · örtmayo</span>
             </div>
-            <div class="menu-tile__info">
-              <h3 class="menu-tile__name">Verde</h3>
-              <p class="menu-tile__desc">Ruccola, parmesan, grillad zucchini, citronaioli</p>
-              <div class="menu-tile__footer">
-                <span class="menu-tile__price">XXX kr</span>
-                <span class="menu-tile__tag">Vegetarisk</span>
-              </div>
+            <span class="menu-list__price">95 kr</span>
+          </div>
+          <div class="menu-list__row reveal">
+            <div class="menu-list__left">
+              <span class="menu-list__name">Piada Mini</span>
+              <span class="menu-list__desc">Fontal (italiensk mild ost) · prosciutto cotto</span>
             </div>
-          </article>
+            <span class="menu-list__price">69 kr</span>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- ===========================
-         POMMES
+         FRIES
     =========================== -->
-    <section class="menu-section menu-section--alt" id="pommes" aria-labelledby="pommes-heading">
+    <section class="menu-section menu-section--alt" id="fries" aria-labelledby="fries-heading">
       <div class="menu-section__inner">
         <div class="menu-section__header reveal">
           <span class="menu-section__label">Tillbehör</span>
-          <h2 class="menu-section__title" id="pommes-heading">Pommes</h2>
+          <h2 class="menu-section__title" id="fries-heading">Fries</h2>
         </div>
         <div class="menu-list">
           <div class="menu-list__row reveal">
             <div class="menu-list__left">
-              <span class="menu-list__name">Pommes frites</span>
-              <span class="menu-list__desc">Klassisk crispy</span>
+              <span class="menu-list__name">Classiche</span>
+              <span class="menu-list__desc">Havssalt</span>
             </div>
-            <span class="menu-list__price">XX kr</span>
+            <span class="menu-list__price">35 kr</span>
           </div>
           <div class="menu-list__row reveal">
             <div class="menu-list__left">
-              <span class="menu-list__name">Tryffelostpommes</span>
-              <span class="menu-list__desc">Pommes med tryffelolja och parmesanflakes</span>
+              <span class="menu-list__name">Parmigiano</span>
+              <span class="menu-list__desc">Parmesan · persilja</span>
             </div>
-            <span class="menu-list__price">XX kr</span>
+            <span class="menu-list__price">49 kr</span>
+          </div>
+        </div>
+
+        <div class="menu-subhead reveal">
+          <h3 class="menu-subhead__title">Dip</h3>
+          <span class="menu-subhead__note">Tillval</span>
+        </div>
+        <div class="menu-list">
+          <div class="menu-list__row reveal">
+            <div class="menu-list__left">
+              <span class="menu-list__name">Rostad vitlöksdipp</span>
+            </div>
+            <span class="menu-list__price">10 kr</span>
           </div>
           <div class="menu-list__row reveal">
             <div class="menu-list__left">
-              <span class="menu-list__name">Sötpotatis</span>
-              <span class="menu-list__desc">Krispiga sötpotatisfrites</span>
+              <span class="menu-list__name">'Nduja mayo</span>
             </div>
-            <span class="menu-list__price">XX kr</span>
+            <span class="menu-list__price">10 kr</span>
+          </div>
+          <div class="menu-list__row reveal">
+            <div class="menu-list__left">
+              <span class="menu-list__name">Örtmayo</span>
+            </div>
+            <span class="menu-list__price">10 kr</span>
           </div>
         </div>
       </div>
     </section>
 
     <!-- ===========================
-         DESSERT
+         DOLCE
     =========================== -->
-    <section class="menu-section" id="dessert" aria-labelledby="dessert-heading">
+    <section class="menu-section" id="dolce" aria-labelledby="dolce-heading">
       <div class="menu-section__inner">
         <div class="menu-section__header reveal">
-          <span class="menu-section__label">Dolci</span>
-          <h2 class="menu-section__title" id="dessert-heading">Dessert</h2>
+          <span class="menu-section__label">Dolce</span>
+          <h2 class="menu-section__title" id="dolce-heading">Dolce della Casa</h2>
         </div>
         <div class="menu-list">
           <div class="menu-list__row reveal">
             <div class="menu-list__left">
-              <span class="menu-list__name">Piada dolce</span>
-              <span class="menu-list__desc">Nutella och ricotta</span>
+              <span class="menu-list__name">Hemmagjord tiramisu</span>
             </div>
-            <span class="menu-list__price">XX kr</span>
-          </div>
-          <div class="menu-list__row reveal">
-            <div class="menu-list__left">
-              <span class="menu-list__name">Cannolo siciliano</span>
-              <span class="menu-list__desc">Ricottafylld cannolo med pistagemix</span>
-            </div>
-            <span class="menu-list__price">XX kr</span>
-          </div>
-          <div class="menu-list__row reveal">
-            <div class="menu-list__left">
-              <span class="menu-list__name">Tiramisu</span>
-              <span class="menu-list__desc">Klassisk hemgjord tiramisu</span>
-            </div>
-            <span class="menu-list__price">XX kr</span>
+            <span class="menu-list__price">59 kr</span>
           </div>
         </div>
       </div>
     </section>
 
     <!-- ===========================
-         DRYCK
+         CAFFÈ
     =========================== -->
-    <section class="menu-section menu-section--alt" id="dryck" aria-labelledby="dryck-heading">
+    <section class="menu-section menu-section--alt" id="caffe" aria-labelledby="caffe-heading">
       <div class="menu-section__inner">
         <div class="menu-section__header reveal">
-          <span class="menu-section__label">Bevande</span>
-          <h2 class="menu-section__title" id="dryck-heading">Dryck</h2>
+          <span class="menu-section__label">Bar</span>
+          <h2 class="menu-section__title" id="caffe-heading">Caffè</h2>
         </div>
         <div class="menu-list">
-          <div class="menu-list__row reveal">
-            <div class="menu-list__left">
-              <span class="menu-list__name">Limonata italiana</span>
-              <span class="menu-list__desc">Hemgjord italiensk citronlimonad</span>
-            </div>
-            <span class="menu-list__price">XX kr</span>
-          </div>
-          <div class="menu-list__row reveal">
-            <div class="menu-list__left">
-              <span class="menu-list__name">San Pellegrino</span>
-              <span class="menu-list__desc">Sparkling mineral water, 25 cl</span>
-            </div>
-            <span class="menu-list__price">XX kr</span>
-          </div>
-          <div class="menu-list__row reveal">
-            <div class="menu-list__left">
-              <span class="menu-list__name">Coca-Cola</span>
-              <span class="menu-list__desc">33 cl</span>
-            </div>
-            <span class="menu-list__price">XX kr</span>
-          </div>
-          <div class="menu-list__row reveal">
-            <div class="menu-list__left">
-              <span class="menu-list__name">Vatten</span>
-              <span class="menu-list__desc">Stilla / kolsyrat</span>
-            </div>
-            <span class="menu-list__price">XX kr</span>
-          </div>
           <div class="menu-list__row reveal">
             <div class="menu-list__left">
               <span class="menu-list__name">Espresso</span>
-              <span class="menu-list__desc">Kort och intensiv</span>
             </div>
-            <span class="menu-list__price">XX kr</span>
+            <span class="menu-list__price">25 kr</span>
           </div>
           <div class="menu-list__row reveal">
             <div class="menu-list__left">
-              <span class="menu-list__name">Caffè latte</span>
-              <span class="menu-list__desc">Dubbel espresso med ångad mjölk</span>
+              <span class="menu-list__name">Espresso doppio</span>
             </div>
-            <span class="menu-list__price">XX kr</span>
+            <span class="menu-list__price">35 kr</span>
+          </div>
+          <div class="menu-list__row reveal">
+            <div class="menu-list__left">
+              <span class="menu-list__name">Macchiato</span>
+            </div>
+            <span class="menu-list__price">28 kr</span>
+          </div>
+          <div class="menu-list__row reveal">
+            <div class="menu-list__left">
+              <span class="menu-list__name">Cappuccino</span>
+            </div>
+            <span class="menu-list__price">35 kr</span>
+          </div>
+          <div class="menu-list__row reveal">
+            <div class="menu-list__left">
+              <span class="menu-list__name">Latte</span>
+            </div>
+            <span class="menu-list__price">38 kr</span>
+          </div>
+          <div class="menu-list__row reveal">
+            <div class="menu-list__left">
+              <span class="menu-list__name">Vaniljlatte</span>
+            </div>
+            <span class="menu-list__price">42 kr</span>
+          </div>
+          <div class="menu-list__row reveal">
+            <div class="menu-list__left">
+              <span class="menu-list__name">Americano</span>
+            </div>
+            <span class="menu-list__price">30 kr</span>
+          </div>
+          <div class="menu-list__row reveal">
+            <div class="menu-list__left">
+              <span class="menu-list__name">Affogato</span>
+              <span class="menu-list__desc">Italiensk gelato alla vaniglia &amp; varm espresso</span>
+            </div>
+            <span class="menu-list__price">45 kr</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===========================
+         SOFT DRINKS
+    =========================== -->
+    <section class="menu-section" id="soft-drinks" aria-labelledby="soft-drinks-heading">
+      <div class="menu-section__inner">
+        <div class="menu-section__header reveal">
+          <span class="menu-section__label">Bevande</span>
+          <h2 class="menu-section__title" id="soft-drinks-heading">Soft Drinks</h2>
+        </div>
+        <div class="menu-list">
+          <div class="menu-list__row reveal">
+            <div class="menu-list__left">
+              <span class="menu-list__name">Coca-Cola</span>
+            </div>
+            <span class="menu-list__price">19 kr</span>
+          </div>
+          <div class="menu-list__row reveal">
+            <div class="menu-list__left">
+              <span class="menu-list__name">Coca-Cola Zero</span>
+            </div>
+            <span class="menu-list__price">19 kr</span>
+          </div>
+          <div class="menu-list__row reveal">
+            <div class="menu-list__left">
+              <span class="menu-list__name">Fanta</span>
+            </div>
+            <span class="menu-list__price">19 kr</span>
+          </div>
+          <div class="menu-list__row reveal">
+            <div class="menu-list__left">
+              <span class="menu-list__name">Loka</span>
+              <span class="menu-list__desc">Citron / naturell</span>
+            </div>
+            <span class="menu-list__price">19 kr</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===========================
+         BEVANDE ITALIANE
+    =========================== -->
+    <section class="menu-section menu-section--alt" id="bevande" aria-labelledby="bevande-heading">
+      <div class="menu-section__inner">
+        <div class="menu-section__header reveal">
+          <span class="menu-section__label">Italia</span>
+          <h2 class="menu-section__title" id="bevande-heading">Bevande Italiane</h2>
+        </div>
+        <div class="menu-list">
+          <div class="menu-list__row reveal">
+            <div class="menu-list__left">
+              <span class="menu-list__name">Aranciata</span>
+              <span class="menu-list__desc">Siciliansk apelsin</span>
+            </div>
+            <span class="menu-list__price">39 kr</span>
+          </div>
+          <div class="menu-list__row reveal">
+            <div class="menu-list__left">
+              <span class="menu-list__name">Limonata</span>
+              <span class="menu-list__desc">Citron &amp; ingefära</span>
+            </div>
+            <span class="menu-list__price">39 kr</span>
+          </div>
+          <div class="menu-list__row reveal">
+            <div class="menu-list__left">
+              <span class="menu-list__name">Lime</span>
+              <span class="menu-list__desc">Siciliansk lime &amp; cocos</span>
+            </div>
+            <span class="menu-list__price">39 kr</span>
+          </div>
+          <div class="menu-list__row reveal">
+            <div class="menu-list__left">
+              <span class="menu-list__name">Melograno</span>
+              <span class="menu-list__desc">Granatäpple &amp; fläder</span>
+            </div>
+            <span class="menu-list__price">39 kr</span>
+          </div>
+          <div class="menu-list__row reveal">
+            <div class="menu-list__left">
+              <span class="menu-list__name">Succo alla pera</span>
+              <span class="menu-list__desc">Italiensk päronjuice</span>
+            </div>
+            <span class="menu-list__price">25 kr</span>
+          </div>
+          <div class="menu-list__row reveal">
+            <div class="menu-list__left">
+              <span class="menu-list__name">Succo alla pesca</span>
+              <span class="menu-list__desc">Italiensk persikojuice</span>
+            </div>
+            <span class="menu-list__price">25 kr</span>
+          </div>
+          <div class="menu-list__row reveal">
+            <div class="menu-list__left">
+              <span class="menu-list__name">Birra Moretti</span>
+              <span class="menu-list__desc">Alkoholfri</span>
+            </div>
+            <span class="menu-list__price">42 kr</span>
           </div>
         </div>
       </div>
@@ -763,7 +898,7 @@
     document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
     // Active category nav on scroll
-    const sections = document.querySelectorAll('[id]');
+    const sections = document.querySelectorAll('main section[id]');
     const navLinks = document.querySelectorAll('.menu-nav__link');
 
     const sectionObs = new IntersectionObserver((entries) => {
